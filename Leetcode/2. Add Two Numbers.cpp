@@ -31,6 +31,22 @@ public:
         it->next = new_node;
     }
     
+    int get_rem(ListNode **head, int res)
+    {
+        int rem;
+        if(res>9)
+        {
+            rem = 1;
+            push(head, res%10);
+        }
+        else
+        {
+            rem = 0;
+            push(head, res);
+        }
+        return rem;
+    }
+    
     
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
         
@@ -39,17 +55,7 @@ public:
         while(l1!=NULL && l2!=NULL)
         {
             int res = l1->val+l2->val+rem;
-            if(res>9)
-            {
-                rem = 1;
-                push(&head, res%10);
-            }
-            else
-            {
-                rem = 0;
-                push(&head, res);
-            }
-            
+            rem = get_rem(&head, res);
             l1 = l1->next;
             l2 = l2->next;
         }
@@ -57,32 +63,14 @@ public:
         while(l1!=NULL)
         {
             int res = l1->val+rem;
-            if(res>9)
-            {
-                rem = 1;
-                push(&head, res%10);
-            }
-            else
-            {
-                rem = 0;
-                push(&head, res);
-            }
+            rem = get_rem(&head, res);
             l1 = l1->next;
         }
         
         while(l2!=NULL)
         {
             int res = l2->val+rem;
-            if(res>9)
-            {
-                rem = 1;
-                push(&head, res%10);
-            }
-            else
-            {
-                rem = 0;
-                push(&head, res);
-            }
+            rem = get_rem(&head, res);
             l2 = l2->next;
         }
         
