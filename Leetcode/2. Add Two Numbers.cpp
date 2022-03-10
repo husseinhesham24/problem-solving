@@ -31,52 +31,52 @@ public:
         it->next = new_node;
     }
     
-    int get_rem(ListNode **head, int res)
+    int get_carry(ListNode **head, int res)
     {
-        int rem;
+        int carry;
         if(res>9)
         {
-            rem = 1;
+            carry = 1;
             push(head, res%10);
         }
         else
         {
-            rem = 0;
+            carry = 0;
             push(head, res);
         }
-        return rem;
+        return carry;
     }
     
     
     ListNode* addTwoNumbers(ListNode* l1, ListNode* l2) {
         
         ListNode* head = NULL;
-        int rem = 0;
+        int carry = 0;
         while(l1!=NULL && l2!=NULL)
         {
-            int res = l1->val+l2->val+rem;
-            rem = get_rem(&head, res);
+            int res = l1->val+l2->val+carry;
+            carry = get_carry(&head, res);
             l1 = l1->next;
             l2 = l2->next;
         }
         
         while(l1!=NULL)
         {
-            int res = l1->val+rem;
-            rem = get_rem(&head, res);
+            int res = l1->val+carry;
+            carry = get_carry(&head, res);
             l1 = l1->next;
         }
         
         while(l2!=NULL)
         {
-            int res = l2->val+rem;
-            rem = get_rem(&head, res);
+            int res = l2->val+carry;
+            carry = get_carry(&head, res);
             l2 = l2->next;
         }
         
-        if(rem==1)
+        if(carry==1)
         {
-            push(&head, rem);
+            push(&head, carry);
         }
         return head;
     }
