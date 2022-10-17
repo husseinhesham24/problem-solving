@@ -11,13 +11,24 @@
  */
 class Solution {
 public:
-    vector<int>ans;
-    vector<int> inorderTraversal(TreeNode* root) {
+
+    string tree2str(TreeNode* root) {
         if(root==NULL)
-            return ans;
-        inorderTraversal(root->left);
-        ans.push_back(root->val);
-        inorderTraversal(root->right);
+            return "";
+        
+        string ans = to_string(root->val);
+        if(root->left)
+        {
+            ans += "(" + tree2str(root->left) + ")";
+        }
+        if(root->right)
+        {
+            if(!root->left)
+            {
+                ans+="()";
+            }
+            ans +="(" + tree2str(root->right) + ")";
+        }
         return ans;
     }
 };
