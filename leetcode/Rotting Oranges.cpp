@@ -1,71 +1,67 @@
 class Solution {
 public:
-    
-    int n, m;
-    int vis[100][100];
-    vector<vector<int>>v;
-    
-    bool valid(int i, int j)
+    int dx[4] = {1, -1, 0, 0};
+    int dy[4] = {0, 0, 1, -1};
+    int n,m;
+    bool valid(int x, int y)
     {
-        return i < n && j < m && i >= 0 && j >= 0;
+        return (x>=0 && y>=0 && x<n && y<m);    
     }
-
-    int dx[8] = {0, 0, 1, -1, -1, -1, 1, 1};
-    int dy[8] = {1, -1, 0, 0, 1, -1, 1, -1};
-    
-    
     int orangesRotting(vector<vector<int>>& grid) {
-        int ans=0;
-        memset(vis, 0, sizeof(vis));
         n = grid.size();
         m = grid[0].size();
-        v = grid;
-        bool is_rot = true;
-        
-        while(is_rot)
-        {
-            is_rot = false;
-            for(int i=0;i<n;i++)
-            {
-                for(int j=0;j<m;j++)
-                {
-                    if(v[i][j]==2 && vis[i][j]==ans)
-                    {
-                        for(int k=0; k<4;k++)
-                        {
-                            int a = i + dx[k];
-                            int b = j + dy[k];
-
-                            if(valid(a, b) && v[a][b]==1)
-                            {
-                                v[a][b] = 2;
-                                vis[a][b] = vis[a][b]+ans+1;
-                                is_rot = true;
-                            }
-                        }
-                    }
-                }
-            }
-            
-            ans++;
-        }
-        
-        
-        ans--;
-        
+        queue<pair<int, int>>q;
+        int fresh=0;
         for(int i=0;i<n;i++)
         {
             for(int j=0;j<m;j++)
             {
-                if(v[i][j]==1)
+                if(grid[i][j]==2)
                 {
-                    ans = -1;
-                    goto done;
+                    q.push({i, j});
+                }
+                else if(grid[i][j]==1)
+                {
+                    fresh++;
                 }
             }
         }
         
-        done:
-        return ans;
+        if(fresh==0 && q.empty())
+        {
+            return 0;
+        }
+        
+        int levels=-1;
+        
+        while(!q.empty())
+        {
+            int sz = q.size();
+            levels++;
+            while(sz--)
+            {
+                pair<int,int>p = q.front();
+                q.pop();
+                for(int i=0;i<4;i++)
+                {
+                    int x = dx[i]+p.first;
+                    int y = dy[i]+p.second;
+                    if(valid(x,y) && grid[x][y]==1)
+                    {
+                        grid[x][y] = 2;
+                        q.push({x,y});
+                        fresh--;
+                        
+                    }
+                }
+            }
+        }
+        
+       if(!fresh)
+       {
+           return levels;
+       }
+        
+        return -1;
     }
 };
