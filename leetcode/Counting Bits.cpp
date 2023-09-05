@@ -1,22 +1,18 @@
-# @param {Integer} n
-# @return {Integer[]}
+class Solution {
+public:
+    vector<int> countBits(int n) {
+        vector<int>ans;
+        for(int i=0;i<=n;i++)
+        {
+            int temp = i, cnt=0;
+            while(temp>0)
+            {
+                cnt+=(temp%2);
+                temp/=2;
+            }
+            ans.push_back(cnt);
+        }
 
-def to_bin(n)
-    bin = ""
-    while n>0
-        bin+=(n%2).to_s
-        n/=2
-    end
-    bin.reverse
-    return bin
-end
-
-
-def count_bits(n)
-    ans = []
-    for i in 0..n
-       ans<<(to_bin(i).count("1"))
-    end
-    
-    return ans
-end
+        return ans;
+    }
+};

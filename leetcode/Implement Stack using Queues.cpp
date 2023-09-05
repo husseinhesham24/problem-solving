@@ -1,8 +1,9 @@
 class MyStack {
-public:
-    queue<int>q,tmp;
+public: 
+    
+    queue<int>q;
     MyStack() {
-        
+       
     }
     
     void push(int x) {
@@ -10,11 +11,11 @@ public:
     }
     
     int pop() {
-        int n=0;
+        queue<int>tmp;
+        int n = q.size();
         int last=0;
         while(!q.empty())
         {
-            n++;
             last = q.front();
             tmp.push(last);
             q.pop();
@@ -28,23 +29,24 @@ public:
             {
                 q.push(tmp.front());
             }
+            
             tmp.pop();
         }
+
         return last;
     }
     
     int top() {
-        int n=0;
+        queue<int>tmp;
         int last=0;
         while(!q.empty())
         {
-            n++;
             last = q.front();
             tmp.push(last);
             q.pop();
         }
         
-        int i=0;
+        
         while(!tmp.empty())
         {
             q.push(tmp.front());
