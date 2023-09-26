@@ -1,6 +1,6 @@
 class Solution {
 public:
-    string removeDuplicateLetters(string s) {
+    string smallestSubsequence(string s) {
         int cnt[30]={0}, vis[30]={0};
         
         for(auto c:s)
