@@ -11,16 +11,25 @@
  */
 class Solution {
 public:
-    
-    TreeNode* invertTree(TreeNode* root) {
-       if(root==NULL)
-       {
-           return root;
-       }
+    int ans=0;
+    void solve(TreeNode* root, int depth)
+    {
+        if(root==NULL)
+        {
+            ans = max(depth-1, ans);
+            return;
+        }
 
-       swap(root->left, root->right);
-       invertTree(root->left);
-       invertTree(root->right);
-       return root;
+        solve(root->left, depth+1);
+        solve(root->right, depth+1);
+    }
+    int maxDepth(TreeNode* root) {
+        if(root==NULL)
+        {
+            return 0;
+        }
+
+        solve(root, 1);
+        return ans;
     }
 };
